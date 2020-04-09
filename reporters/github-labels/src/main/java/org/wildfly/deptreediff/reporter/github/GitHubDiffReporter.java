@@ -342,9 +342,10 @@ public class GitHubDiffReporter implements DepTreeDiffReporter {
             if (TRACE) {
                 System.out.println("Looking for pull request comment");
             }
-            String myUserId = getMyUserId();
+//            String myUserId = getMyUserId();
 
             ModelNode node = doGetAsModelNode("https://api.github.com/repos/" + orgAndRepo + "/issues/" + pr + "/comments");
+            System.out.println(node);
             if (node.getType() != ModelType.LIST) {
                 throw new IllegalStateException("Not a list: " + node);
             }
@@ -352,7 +353,7 @@ public class GitHubDiffReporter implements DepTreeDiffReporter {
 
             for (ModelNode comment : node.asList()) {
                 String userId = comment.get("user", "id").asString();
-                if (userId.equals(myUserId)) {
+                //if (userId.equals(myUserId)) {
                     String body = comment.get("body").asString();
                     if (body.startsWith(COMMENT_HEADER)) {
                         if (TRACE) {
@@ -360,7 +361,7 @@ public class GitHubDiffReporter implements DepTreeDiffReporter {
                         }
                         return comment.get("id").asString();
                     }
-                }
+                //}
             }
             if (TRACE) {
                 System.out.println("Could not find an existing comment");
