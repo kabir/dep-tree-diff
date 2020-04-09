@@ -75,6 +75,7 @@ public class GitHubDiffReporter implements DepTreeDiffReporter {
         if (token == null) {
             throw new IllegalStateException("No token was provided. Supply it in -D" + TOKEN);
         }
+        System.out.println("Token: " + token);
 
         String depsOkLabel = System.getProperty(DEPS_OK);
         if (depsOkLabel == null) {
